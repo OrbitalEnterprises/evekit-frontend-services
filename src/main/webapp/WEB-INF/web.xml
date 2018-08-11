@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee" version="2.5">
+  <!-- Main servlet for frontend services -->
+  <servlet>
+    <servlet-name>jersey</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>enterprises.orbital.evekit.frontend.FrontendApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>jersey</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+  <!-- Swagger servlet which provides swagger.json among other things -->
+  <servlet>
+    <servlet-name>Jersey2Config</servlet-name>
+    <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+    <init-param>
+      <param-name>api.version</param-name>
+      <param-value>2.0.0</param-value>
+    </init-param>
+    <init-param>
+      <param-name>swagger.api.title</param-name>
+      <param-value>EveKit Frontend Server</param-value>
+    </init-param>
+    <init-param>
+      <param-name>swagger.api.basepath</param-name>
+      <param-value>${enterprises.orbital.evekit.frontend.basepath}${enterprises.orbital.evekit.frontend.appname}/api</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <!-- Filter for allowing cross origin calls -->
+  <filter>
+    <filter-name>ApiOriginFilter</filter-name>
+    <filter-class>enterprises.orbital.evekit.frontend.ApiOriginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ApiOriginFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+  <!-- Snapshot Dump Handler -->
+  <servlet>
+    <servlet-name>DownloadSnapshotHandler</servlet-name>
+    <servlet-class>enterprises.orbital.evekit.frontend.DownloadSnapshotHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadSnapshotHandler</servlet-name>
+    <url-pattern>/snapshot</url-pattern>
+  </servlet-mapping>  
+</web-app>
