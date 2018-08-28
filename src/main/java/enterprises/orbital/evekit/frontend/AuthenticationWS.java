@@ -11,15 +11,11 @@ import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -40,24 +36,25 @@ import java.util.logging.Logger;
 public class AuthenticationWS {
   private static final Logger log = Logger.getLogger(AuthenticationWS.class.getName());
 
-  protected static URIBuilder makeStandardBuilder(
+  @SuppressWarnings("unused")
+  private static URIBuilder makeStandardBuilder(
       HttpServletRequest req)
-      throws MalformedURLException, URISyntaxException {
-    URIBuilder builder = new URIBuilder(OrbitalProperties.getGlobalProperty(FrontendApplication.PROP_APP_PATH, FrontendApplication.DEF_APP_PATH) + "/");
-    return builder;
+      throws URISyntaxException {
+    return new URIBuilder(OrbitalProperties.getGlobalProperty(FrontendApplication.PROP_APP_PATH, FrontendApplication.DEF_APP_PATH) + "/");
   }
 
-  protected static String makeErrorCallback(
+  private static String makeErrorCallback(
       HttpServletRequest req,
       String source)
-      throws MalformedURLException, URISyntaxException {
+      throws URISyntaxException {
     URIBuilder builder = makeStandardBuilder(req);
     builder.addParameter("auth_error",
                          "Error while authenticating with " + source + ".  Please retry.  If the problem perists, please contact the site admin.");
     return builder.toString();
   }
 
-  protected static void loginDebugUser(
+  @SuppressWarnings({"Duplicates", "SameParameterValue"})
+  private static void loginDebugUser(
       String source,
       String screenName,
       HttpServletRequest req)
@@ -84,6 +81,7 @@ public class AuthenticationWS {
     }
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/login/{source}")
   @GET
   @io.swagger.annotations.ApiOperation(
@@ -153,6 +151,7 @@ public class AuthenticationWS {
     return null;
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/callback/{source}")
   @GET
   @io.swagger.annotations.ApiOperation(
@@ -218,6 +217,7 @@ public class AuthenticationWS {
     return null;
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/logout")
   @GET
   @io.swagger.annotations.ApiOperation(
@@ -241,6 +241,7 @@ public class AuthenticationWS {
                    .build();
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/remove/{source}")
   @GET
   @io.swagger.annotations.ApiOperation(
@@ -269,6 +270,7 @@ public class AuthenticationWS {
                    .build();
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/become/{uid}")
   @GET
   @io.swagger.annotations.ApiOperation(
@@ -292,8 +294,7 @@ public class AuthenticationWS {
       @PathParam("uid") @ApiParam(
           name = "uid",
           required = true,
-          value = "UID of user to switch to") long uid)
-      throws IOException, URISyntaxException {
+          value = "UID of user to switch to") long uid) {
     // Retrieve user and verify as needed
     EveKitUserAccount user = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (user == null || !user.isAdmin()) {
@@ -324,6 +325,65 @@ public class AuthenticationWS {
                      .build();
     } catch (IOException e) {
       ServiceError errMsg = new ServiceError(Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Error becoming different user, check logs");
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+                     .entity(errMsg)
+                     .build();
+    }
+
+  }
+
+  @Path("/removeuser/{uid}")
+  @DELETE
+  @io.swagger.annotations.ApiOperation(
+      value = "Remove the user with the specified UID")
+  @io.swagger.annotations.ApiResponses(
+      value = {
+          @io.swagger.annotations.ApiResponse(
+              code = 200,
+              message = "User with specified UID removed"),
+          @io.swagger.annotations.ApiResponse(
+              code = 401,
+              message = "Requestor not logged in, not an admin, or has the same UID as the target user",
+              response = ServiceError.class),
+          @io.swagger.annotations.ApiResponse(
+              code = 400,
+              message = "User not yet ready to be removed",
+              response = ServiceError.class),
+          @io.swagger.annotations.ApiResponse(
+              code = 404,
+              message = "Request UID not found",
+              response = ServiceError.class)
+      })
+  public Response removeUser(
+      @Context HttpServletRequest request,
+      @PathParam("uid") @ApiParam(
+          name = "uid",
+          required = true,
+          value = "UID of user to remove") long uid) {
+    // Retrieve user and verify as needed
+    EveKitUserAccount user = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
+    if (user == null || !user.isAdmin() || Long.parseLong(user.getUid()) == uid) {
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in, not an admin, or has UID equal to the target user");
+      return Response.status(Status.UNAUTHORIZED)
+                     .entity(errMsg)
+                     .build();
+    }
+    try {
+      EveKitUserAccount.removeAccount(uid);
+      return Response.ok()
+                     .build();
+    } catch (UserNotFoundException e) {
+      ServiceError errMsg = new ServiceError(Status.NOT_FOUND.getStatusCode(), "Target user not found");
+      return Response.status(Status.NOT_FOUND)
+                     .entity(errMsg)
+                     .build();
+    } catch (IllegalStateException e) {
+      ServiceError errMsg = new ServiceError(Status.BAD_REQUEST.getStatusCode(), "Target user not ready to be removed");
+      return Response.status(Status.BAD_REQUEST)
+                     .entity(errMsg)
+                     .build();
+    } catch (IOException e) {
+      ServiceError errMsg = new ServiceError(Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Error removing user, check logs");
       return Response.status(Status.INTERNAL_SERVER_ERROR)
                      .entity(errMsg)
                      .build();
