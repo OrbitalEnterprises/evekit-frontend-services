@@ -37,6 +37,8 @@ public class FrontendApplication extends Application {
     PersistentProperty.setProvider(new DBPropertyProvider(OrbitalProperties.getGlobalProperty(PROP_PROPERTIES_PU)));
     // Sent UserAccountProvider provider
     AuthUtil.setUserAccountProvider(new EveKitUserAccountProvider());
+    // Start quickstart request cleanup thread
+    QuickStartRequest.init();
   }
 
   @Override

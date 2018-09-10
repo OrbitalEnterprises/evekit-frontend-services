@@ -48,6 +48,7 @@
         <class>enterprises.orbital.evekit.model.SyncTracker</class>
         <class>enterprises.orbital.evekit.model.ESIEndpointSyncTracker</class>
         <class>enterprises.orbital.evekit.model.ESIRefEndpointSyncTracker</class>
+        <class>enterprises.orbital.evekit.frontend.QuickStartRequest</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="${enterprises.orbital.evekit.frontend.db.account.driver}"/>

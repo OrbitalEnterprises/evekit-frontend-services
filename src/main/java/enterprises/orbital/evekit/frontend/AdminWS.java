@@ -56,7 +56,8 @@ public class AdminWS {
     // Verify caller is an admin
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || !admin.isAdmin()) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -99,7 +100,8 @@ public class AdminWS {
     // Verify caller is an admin
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || !admin.isAdmin()) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -132,7 +134,8 @@ public class AdminWS {
     // Verify caller is an admin
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || !admin.isAdmin()) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -163,7 +166,8 @@ public class AdminWS {
       if (next.getPropertyName()
               .startsWith(keyPrefix))
         // Add the property with the key prefix stripped. This hides the property naming scheme from the caller.
-        result.add(new PersistentProperty(next.getPropertyName().substring(keyPrefix.length()),
+        result.add(new PersistentProperty(next.getPropertyName()
+                                              .substring(keyPrefix.length()),
                                           next.getPropertyValue()));
     }
     return Response.ok()
@@ -198,6 +202,7 @@ public class AdminWS {
                    .build();
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/userprop/{uid}")
   @GET
   @ApiOperation(
@@ -227,7 +232,8 @@ public class AdminWS {
     // Verify caller is an admin or is the owner of uid
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || (!admin.isAdmin() && admin.getID() != uid)) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -258,13 +264,15 @@ public class AdminWS {
                      .build();
     } catch (IOException e) {
       ServiceError errMsg = new ServiceError(
-          Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Error retrieving user properties, contact admin if this problem persists");
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error retrieving user properties, contact admin if this problem persists");
       return Response.status(Status.INTERNAL_SERVER_ERROR)
                      .entity(errMsg)
                      .build();
     }
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/userprop/{uid}/{key}")
   @GET
   @ApiOperation(
@@ -297,7 +305,8 @@ public class AdminWS {
     // Verify caller is an admin or the owner of uid
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || (!admin.isAdmin() && admin.getID() != uid)) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -321,13 +330,15 @@ public class AdminWS {
                      .build();
     } catch (IOException e) {
       ServiceError errMsg = new ServiceError(
-          Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Error retrieving user properties, contact admin if this problem persists");
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error retrieving user properties, contact admin if this problem persists");
       return Response.status(Status.INTERNAL_SERVER_ERROR)
                      .entity(errMsg)
                      .build();
     }
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/userprop/{uid}/{key}")
   @PUT
   @ApiOperation(
@@ -363,7 +374,8 @@ public class AdminWS {
     // Verify caller is an admin or owner of uid
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || (!admin.isAdmin() && admin.getID() != uid)) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -381,13 +393,15 @@ public class AdminWS {
                      .build();
     } catch (IOException e) {
       ServiceError errMsg = new ServiceError(
-          Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Error setting user properties, contact admin if this problem persists");
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error setting user properties, contact admin if this problem persists");
       return Response.status(Status.INTERNAL_SERVER_ERROR)
                      .entity(errMsg)
                      .build();
     }
   }
 
+  @SuppressWarnings("Duplicates")
   @Path("/userprop/{uid}/{key}")
   @DELETE
   @ApiOperation(
@@ -419,7 +433,8 @@ public class AdminWS {
     // Verify caller is an admin or owner of uid
     EveKitUserAccount admin = (EveKitUserAccount) AuthUtil.getCurrentUser(request);
     if (admin == null || (!admin.isAdmin() && admin.getID() != uid)) {
-      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(), "Requestor not logged in or not an admin");
+      ServiceError errMsg = new ServiceError(Status.UNAUTHORIZED.getStatusCode(),
+                                             "Requestor not logged in or not an admin");
       return Response.status(Status.UNAUTHORIZED)
                      .entity(errMsg)
                      .build();
@@ -437,7 +452,205 @@ public class AdminWS {
                      .build();
     } catch (IOException e) {
       ServiceError errMsg = new ServiceError(
-          Status.INTERNAL_SERVER_ERROR.getStatusCode(), "Error deleting user property, contact admin if this problem persists");
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error deleting user property, contact admin if this problem persists");
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+                     .entity(errMsg)
+                     .build();
+    }
+  }
+
+  @Path("/qs_request")
+  @GET
+  @ApiOperation(
+      value = "Request a quickstart access key selection")
+  @ApiResponses(
+      value = {
+          @ApiResponse(
+              code = 200,
+              message = "User URL and token",
+              response = QuickStartResponse.class),
+          @ApiResponse(
+              code = 500,
+              message = "Internal error creating request",
+              response = ServiceError.class),
+      })
+  public Response startQuickStartRequest(
+      @Context HttpServletRequest request,
+      @QueryParam("requestor") @ApiParam(
+          name = "requestor",
+          required = true,
+          value = "Access key requestor")
+          String requestor) {
+
+    // Start a new quickstart access key request
+    try {
+      QuickStartRequest req = QuickStartRequest.makeSelectionRequest(requestor);
+      return Response.status(Status.OK)
+                     .entity(req.asResponse())
+                     .build();
+    } catch (IOException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error creating quickstart request, contact admin if this problem persists");
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+                     .entity(errMsg)
+                     .build();
+    }
+  }
+
+  @Path("/qs_get_requestor/{sid}")
+  @GET
+  @ApiOperation(
+      value = "Get the name of the requestor for a given qs request ID.")
+  @ApiResponses(
+      value = {
+          @ApiResponse(
+              code = 200,
+              message = "the name of the requestor",
+              response = QuickStartRequestor.class),
+          @ApiResponse(
+              code = 404,
+              message = "No request was found with the given ID.  Request may have already expired.",
+              response = ServiceError.class),
+          @ApiResponse(
+              code = 500,
+              message = "Internal error retrieving requestor",
+              response = ServiceError.class),
+      })
+  public Response quickStartSelectionRequestor(
+      @Context HttpServletRequest request,
+      @PathParam("sid") @ApiParam(
+          name = "sid",
+          required = true,
+          value = "Quickstart request ID")
+          long sid) {
+
+    // Store access key selection
+    try {
+      return Response.status(Status.OK)
+                     .entity(new QuickStartRequestor(sid, QuickStartRequest.requestor(sid)))
+                     .build();
+    } catch (UnknownQuickStartRequestException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.NOT_FOUND.getStatusCode(),
+          "No quickstart request was found with the given ID.  The request may have expired.");
+      return Response.status(Status.NOT_FOUND)
+                     .entity(errMsg)
+                     .build();
+    } catch (IOException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error retrieving requestor, contact admin if this problem persists");
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+                     .entity(errMsg)
+                     .build();
+    }
+  }
+
+  @Path("/qs_store_selection/{sid}")
+  @PUT
+  @ApiOperation(
+      value = "Request a quickstart access key selection")
+  @ApiResponses(
+      value = {
+          @ApiResponse(
+              code = 200,
+              message = "selection stored"),
+          @ApiResponse(
+              code = 404,
+              message = "No request was found with the given ID.  Request may have already expired.",
+              response = ServiceError.class),
+          @ApiResponse(
+              code = 500,
+              message = "Internal error storing results",
+              response = ServiceError.class),
+      })
+  public Response storeQuickStartSelection(
+      @Context HttpServletRequest request,
+      @PathParam("sid") @ApiParam(
+          name = "sid",
+          required = true,
+          value = "Quickstart request ID")
+      long sid,
+      @QueryParam("accessKey")
+      @ApiParam(
+          name = "accessKey",
+          required = true,
+          value = "Selected access key ID")
+      long accessKey,
+      @QueryParam("accessHash")
+      @ApiParam(
+          name = "accessHash",
+          required = true,
+          value = "Selected access key hash")
+      String accessHash) {
+
+    // Store access key selection
+    try {
+      QuickStartRequest.recordCredentials(sid, accessKey, accessHash);
+      return Response.status(Status.OK)
+                     .build();
+    } catch (UnknownQuickStartRequestException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.NOT_FOUND.getStatusCode(),
+          "No quickstart request was found with the given ID.  The request may have expired.");
+      return Response.status(Status.NOT_FOUND)
+                     .entity(errMsg)
+                     .build();
+    } catch (IOException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error storing access key selection, contact admin if this problem persists");
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+                     .entity(errMsg)
+                     .build();
+    }
+  }
+
+  @Path("/qs_retrieve_selection/{token}")
+  @GET
+  @ApiOperation(
+      value = "Retrieve a quickstart access key selection")
+  @ApiResponses(
+      value = {
+          @ApiResponse(
+              code = 200,
+              message = "Selection results (status may indicate pending).",
+              response = QuickStartSelection.class),
+          @ApiResponse(
+              code = 404,
+              message = "No request was found with the given ID.  Request may have already expired.",
+              response = ServiceError.class),
+          @ApiResponse(
+              code = 500,
+              message = "Internal error storing results",
+              response = ServiceError.class),
+      })
+  public Response retrieveQuickStartSelection(
+      @Context HttpServletRequest request,
+      @PathParam("token") @ApiParam(
+          name = "token",
+          required = true,
+          value = "Quickstart retrieval token")
+          String token) {
+
+    // Store access key selection
+    try {
+      return Response.status(Status.OK)
+                     .entity(QuickStartRequest.getByToken(token).asSelection())
+                     .build();
+    } catch (UnknownQuickStartRequestException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.BAD_REQUEST.getStatusCode(),
+          "No quickstart request was found with the given token.  The request may have expired.");
+      return Response.status(Status.BAD_REQUEST)
+                     .entity(errMsg)
+                     .build();
+    } catch (IOException e) {
+      ServiceError errMsg = new ServiceError(
+          Status.INTERNAL_SERVER_ERROR.getStatusCode(),
+          "Error retrieving access key selection, contact admin if this problem persists");
       return Response.status(Status.INTERNAL_SERVER_ERROR)
                      .entity(errMsg)
                      .build();
