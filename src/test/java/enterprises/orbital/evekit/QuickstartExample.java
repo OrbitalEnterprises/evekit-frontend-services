@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * This simple tool demonstrates using EveKit's quickstart functionality
  * to retrieve credentials for a synchronized account.
  */
-public class QuickstartSample {
+public class QuickstartExample {
   private static final String quickstartRequestURL = "https://evekit.orbital.enterprises/api//ws/v1/admin/qs_request";
   private static final String quickstartRetrieveURL = "https://evekit.orbital.enterprises/api//ws/v1/admin/qs_retrieve_selection/";
   private static final long SELECTION_WAIT_TIMEOUT = TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES);
