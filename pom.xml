@@ -9,7 +9,7 @@
   </parent>
   <groupId>enterprises.orbital.evekit</groupId>
   <artifactId>frontend-services</artifactId>
-  <version>4.3</version>
+  <version>4.3.0</version>
   <packaging>war</packaging>
   <name>EveKit Frontend Services</name>
   <description>Web services to support the main EveKit UI</description>
@@ -34,7 +34,7 @@
     <enterprises.orbital.evekit.access_key_limit>10</enterprises.orbital.evekit.access_key_limit>
     <enterprises.orbital.evekit.reauthFragment>account/view</enterprises.orbital.evekit.reauthFragment>
     <enterprises.orbital.evekit.frontend.beta>false</enterprises.orbital.evekit.frontend.beta>
-    <evekit.version>4.2.1</evekit.version>
+    <evekit.version>4.3.0</evekit.version>
     <servlet.version>3.1.0</servlet.version>
     <swagger.version>1.5.7</swagger.version>
     <jersey.containers.version>2.1</jersey.containers.version>
