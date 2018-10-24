@@ -28,6 +28,8 @@
     <enterprises.orbital.evekit.frontend.db.properties.dialect>org.hibernate.dialect.MySQLDialect</enterprises.orbital.evekit.frontend.db.properties.dialect>
     <enterprises.orbital.evekit.frontend.db.account.driver>com.mysql.jdbc.Driver</enterprises.orbital.evekit.frontend.db.account.driver>
     <enterprises.orbital.evekit.frontend.db.account.dialect>org.hibernate.dialect.MySQLDialect</enterprises.orbital.evekit.frontend.db.account.dialect>
+    <enterprises.orbital.evekit.frontend.db.usernote.driver>com.mysql.jdbc.Driver</enterprises.orbital.evekit.frontend.db.usernote.driver>
+    <enterprises.orbital.evekit.frontend.db.usernote.dialect>org.hibernate.dialect.MySQLDialect</enterprises.orbital.evekit.frontend.db.usernote.dialect>
     <enterprises.orbital.auth.eve_verify_url>https://login.eveonline.com/oauth/verify</enterprises.orbital.auth.eve_verify_url>
     <enterprises.orbital.auth.eve_debug_mode>false</enterprises.orbital.auth.eve_debug_mode>
     <enterprises.orbital.evekit.sync_account_limit>100</enterprises.orbital.evekit.sync_account_limit>

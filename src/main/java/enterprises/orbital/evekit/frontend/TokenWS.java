@@ -1,31 +1,27 @@
 package enterprises.orbital.evekit.frontend;
 
 import enterprises.orbital.base.OrbitalProperties;
-import enterprises.orbital.evekit.account.*;
-import enterprises.orbital.evekit.model.CapsuleerSyncTracker;
-import enterprises.orbital.evekit.model.CorporationSyncTracker;
-import enterprises.orbital.evekit.model.SyncTracker;
 import enterprises.orbital.evekit.ws.common.ServiceError;
-import enterprises.orbital.oauth.AuthUtil;
-import io.swagger.annotations.*;
-import org.apache.http.client.utils.URIBuilder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +43,9 @@ public class TokenWS {
   private static final Logger log = Logger.getLogger(TokenWS.class.getName());
 
   // Location of ESI server
+  @SuppressWarnings("WeakerAccess")
   public static final String PROP_ESI_SERVER_PATH = "enterprises.orbital.evekit.accountws.esiServerPath";
+  @SuppressWarnings("WeakerAccess")
   public static final String DEF_ESI_SERVER_PATH = "https://esi.tech.ccp.is/latest";
 
   @Path("/get_esi_scopes")
@@ -68,7 +66,7 @@ public class TokenWS {
   public Response getESIScopes(
       @Context HttpServletRequest request) {
     // Retrieve swagger.json from server
-    JsonObject data = null;
+    JsonObject data;
     try {
       String serverPath = OrbitalProperties.getGlobalProperty(PROP_ESI_SERVER_PATH, DEF_ESI_SERVER_PATH) + "/swagger.json";
       URL               target = new URL(serverPath);
@@ -84,7 +82,7 @@ public class TokenWS {
       return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errMsg).build();
     }
     // Extract security object and scopes
-    Map<String, String> scopeMap = new HashMap<String, String>();
+    Map<String, String> scopeMap = new HashMap<>();
     JsonObject          rawMap   = data.getJsonObject("securityDefinitions").getJsonObject("evesso").getJsonObject("scopes");
     for (Map.Entry<String, JsonValue> next : rawMap.entrySet()) {
       scopeMap.put(next.getKey(), next.getValue().toString());

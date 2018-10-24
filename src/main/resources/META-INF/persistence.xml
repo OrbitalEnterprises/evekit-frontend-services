@@ -43,9 +43,6 @@
         <class>enterprises.orbital.evekit.account.SynchronizedEveAccount</class>
         <class>enterprises.orbital.evekit.account.NewESIToken</class>
         <class>enterprises.orbital.evekit.account.EveKitUserNotification</class>
-        <class>enterprises.orbital.evekit.model.CapsuleerSyncTracker</class>
-        <class>enterprises.orbital.evekit.model.CorporationSyncTracker</class>
-        <class>enterprises.orbital.evekit.model.SyncTracker</class>
         <class>enterprises.orbital.evekit.model.ESIEndpointSyncTracker</class>
         <class>enterprises.orbital.evekit.model.ESIRefEndpointSyncTracker</class>
         <class>enterprises.orbital.evekit.frontend.QuickStartRequest</class>
@@ -56,6 +53,34 @@
             <property name="javax.persistence.jdbc.user" value="${enterprises.orbital.evekit.frontend.db.account.user}"/>
             <property name="javax.persistence.jdbc.password" value="${enterprises.orbital.evekit.frontend.db.account.password}"/>
             <property name="hibernate.dialect" value="${enterprises.orbital.evekit.frontend.db.account.dialect}"/>
+            <property name="hibernate.show_sql" value="false" />
+            <property name="hibernate.format_sql" value="false" />
+
+            <property name="hibernate.c3p0.min_size" value="5"/>
+            <property name="hibernate.c3p0.max_size" value="20"/>
+            <property name="hibernate.c3p0.timeout" value="300"/>
+            <property name="hibernate.c3p0.max_statements" value="50"/>
+            <property name="hibernate.c3p0.idle_test_period" value="10000"/>
+        </properties>
+
+    </persistence-unit>
+
+    <persistence-unit name="evekit-user-note">
+        <description>
+            EveKit Account
+        </description>
+
+        <class>enterprises.orbital.db.DBProperty</class>
+        <class>enterprises.orbital.evekit.account.GeneralSequenceNumber</class>
+        <class>enterprises.orbital.evekit.account.EveKitUserAccount</class>
+        <class>enterprises.orbital.evekit.account.EveKitUserNotification</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="${enterprises.orbital.evekit.frontend.db.usernote.driver}"/>
+            <property name="javax.persistence.jdbc.url" value="${enterprises.orbital.evekit.frontend.db.usernote.url}"/>
+            <property name="javax.persistence.jdbc.user" value="${enterprises.orbital.evekit.frontend.db.usernote.user}"/>
+            <property name="javax.persistence.jdbc.password" value="${enterprises.orbital.evekit.frontend.db.usernote.password}"/>
+            <property name="hibernate.dialect" value="${enterprises.orbital.evekit.frontend.db.usernote.dialect}"/>
             <property name="hibernate.show_sql" value="false" />
             <property name="hibernate.format_sql" value="false" />
 
