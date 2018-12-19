@@ -46,7 +46,7 @@ public class TokenWS {
   @SuppressWarnings("WeakerAccess")
   public static final String PROP_ESI_SERVER_PATH = "enterprises.orbital.evekit.accountws.esiServerPath";
   @SuppressWarnings("WeakerAccess")
-  public static final String DEF_ESI_SERVER_PATH = "https://esi.tech.ccp.is/latest";
+  public static final String DEF_ESI_SERVER_PATH = "https://esi.evetech.net/latest";
 
   @Path("/get_esi_scopes")
   @GET
