@@ -245,7 +245,7 @@ public class AdminWS {
 
       // Return list of properties
       final List<PersistentProperty> result = new ArrayList<>();
-      final String keyPrefix = "EveKitUserAccount." + String.valueOf(uid) + ".";
+      final String keyPrefix = "EveKitUserAccount." + uid + ".";
       for (PersistentProperty next : PersistentProperty.getAll()) {
         if (next.getPropertyName()
                 .startsWith(keyPrefix)) {
